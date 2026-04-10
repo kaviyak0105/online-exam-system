@@ -1,5 +1,3 @@
-const mongoose = require('mongoose');
-
 const questionSchema = new mongoose.Schema({
   examId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -10,6 +8,11 @@ const questionSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+  questionType: {
+    type: String,
+    enum: ['mcq', 'descriptive'],
+    default: 'mcq'
+  }, // ← ithu add panna da!
   questionText: {
     type: String,
     required: true

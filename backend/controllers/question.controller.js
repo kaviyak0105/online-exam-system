@@ -6,7 +6,7 @@ const addQuestion = async (req, res) => {
     const { examId, partNumber, questionText, options, correctAnswer, marks } = req.body;
 
     // Auto decide questionType based on marks
-    const questionType = marks === 1 ? 'mcq' : 'descriptive';
+    const questionType = Number(marks) === 1 ? 'mcq' : 'descriptive';
 
     const question = await Question.create({
       examId,
