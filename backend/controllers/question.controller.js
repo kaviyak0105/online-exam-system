@@ -5,17 +5,13 @@ const addQuestion = async (req, res) => {
   try {
     const { examId, partNumber, questionText, options, correctAnswer, marks } = req.body;
 
-    // Auto decide questionType based on marks
-    const questionType = Number(marks) === 1 ? 'mcq' : 'descriptive';
-
     const question = await Question.create({
       examId,
       partNumber,
-      questionType,
       questionText,
-      options: questionType === 'mcq' ? options : [],
-      correctAnswer: questionType === 'mcq' ? correctAnswer : '',
-      marks
+      options,
+      correctAnswer,
+      marks: Number(marks)
     });
 
     res.status(201).json({
@@ -52,15 +48,8 @@ const getQuestionsByPart = async (req, res) => {
 // Update Question (Admin only)
 const updateQuestion = async (req, res) => {
   try {
-    const { marks } = req.body;
-
-    // Auto decide questionType based on marks
-    if (marks) {
-      req.body.questionType = marks === 1 ? 'mcq' : 'descriptive';
-      if (req.body.questionType === 'descriptive') {
-        req.body.options = [];
-        req.body.correctAnswer = '';
-      }
+    if (req.body.marks) {
+      req.body.marks = Number(req.body.marks);
     }
 
     const question = await Question.findByIdAndUpdate(
@@ -68,9 +57,11 @@ const updateQuestion = async (req, res) => {
       req.body,
       { new: true }
     );
+
     if (!question) {
       return res.status(404).json({ message: 'Question not found!' });
     }
+
     res.status(200).json({ message: 'Question updated successfully!', question });
   } catch (error) {
     res.status(500).json({ message: 'Server error!', error });
