@@ -9,8 +9,8 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  
-  origin: ['http://localhost:5173', 'http://localhost:4173'],
+  origin: 'https://subtle-faloodeh-e5e49c.netlify.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
 app.use(express.json());
