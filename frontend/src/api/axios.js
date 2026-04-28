@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'http://localhost:5000/api'
+baseURL: 'https://online-exam-system-yb28.onrender.com/api'
 });
 
 // Every request la automatically token add pannum
