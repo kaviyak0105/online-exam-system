@@ -9,7 +9,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: 'https://my-online-exam.netlify.app',
+  origin: ['https://my-online-exam.netlify.app', 'http://my-online-exam.netlify.app'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
